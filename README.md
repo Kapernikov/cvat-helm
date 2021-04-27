@@ -25,5 +25,5 @@ helm install cvat . \
         --namespace='cvat' --create-namespace \
         --set superUser.initialPassword=boo \
         --set ingress.host=cvat.com \
-        --set ingress.clusterIssuer letsencrypt-prod 
+        --set ingress.clusterIssuer=letsencrypt-prod 
 ```
