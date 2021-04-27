@@ -1,3 +1,9 @@
+superUser:
+  create: true
+  username: admin
+  initialPassword: cvat
+  email: frank@kapernikov.com
+
 ingress:
   host: cvat.kube-public
   clusterIssuer: selfsigned-ca-issuer
