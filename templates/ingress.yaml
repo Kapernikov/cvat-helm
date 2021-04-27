@@ -1,9 +1,29 @@
+{{ if .Values.ingress.clusterIssuer }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cvat-ingress
+spec:
+  secretName: cvat-ingress
+  issuerRef:
+    name: {{ .Values.ingress.clusterIssuer }}
+    kind: ClusterIssuer
+  commonName: {{ .Values.ingress.host }}
+  dnsNames:
+  - {{ .Values.ingress.host }}
+---
+{{ end }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: cvat-ingress
   annotations:
       kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 300m
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+      nginx.ingress.kubernetes.io/cors-allow-headers: X-XSRF-TOKEN,Accept,Accept-Encoding,Accept-Language,DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,Origin,Connection,Content-Length,Content-Type,Host,Referer,User-Agent
+      nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
       nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
 {{ if .Values.ingress.clusterIssuer }}
