@@ -23,11 +23,11 @@ spec:
           - mountPath: "/var/lib/postgresql/data"
             name: cvat-db
         env:
-        - name: POSTGRESQL_USER
+        - name: POSTGRES_USER
           value: root
         - name: POSTGRES_HOST_AUTH_METHOD
           value: trust
-        - name: POSTGRESQL_DATABASE
+        - name: POSTGRES_DB
           value: cvat
       volumes:
         - name: cvat-db
