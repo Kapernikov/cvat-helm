@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cvat-db
+spec:
+  selector:
+    matchLabels:
+      app: cvat-db # has to match .spec.template.metadata.labels
+  serviceName: "cvat-db"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: cvat-db # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: cvat-db
+        image: postgres:10-alpine
+        ports:
+        - containerPort: 5432
+          name: psql
+        volumeMounts:
+          - mountPath: "/var/lib/postgresql/data"
+            name: cvat-db
+        env:
+        - name: POSTGRESQL_USER
+          value: root
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: trust
+        - name: POSTGRESQL_DATABASE
+          value: cvat
+      volumes:
+        - name: cvat-db
+          persistentVolumeClaim:
+            claimName: cvat-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cvat-db
+  labels:
+    app: cvat-db
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+    name: psql
+  clusterIP: None
+  selector:
+    app: cvat-db
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cvat-db
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 2Gi

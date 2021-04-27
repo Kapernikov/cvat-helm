@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cvat
+spec:
+  selector:
+    matchLabels:
+      app: cvat # has to match .spec.template.metadata.labels
+  serviceName: "cvat"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: cvat # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: cvat
+        image: openvino/cvat_server
+        env:
+        - name: "DJANGO_MODWSGI_EXTRA_ARGS"
+          value: ''
+        - name: "ALLOWED_HOSTS"
+          value: '*'
+        - name: "CVAT_REDIS_HOST"
+          value: 'cvat-redis'
+        - name: CVAT_POSTGRES_HOST
+          value: 'cvat-db'
+        - name: ADAPTIVE_AUTO_ANNOTATION
+          value: 'false'
+        - name: CVAT_SHARE_URL
+          value: 'Mounted data'
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
+          - mountPath: "/home/django/data"
+            name: cvat-data
+          - mountPath: "/home/django/keys"
+            name: cvat-keys
+          - mountPath: "/home/django/logs"
+            name: cvat-logs
+          - mountPath: "/home/django/share"
+            name: cvat-share
+            readOnly: true
+
+      volumes:
+        - name: cvat-data
+          persistentVolumeClaim:
+            claimName: cvat-data
+        - name: cvat-keys
+          persistentVolumeClaim:
+            claimName: cvat-keys
+        - name: cvat-logs
+          persistentVolumeClaim:
+            claimName: cvat-logs
+        - name: cvat-share
+          persistentVolumeClaim:
+            claimName: cvat-share
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cvat
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: cvat
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cvat-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 6Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cvat-keys
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cvat-logs
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cvat-share
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 4Gi

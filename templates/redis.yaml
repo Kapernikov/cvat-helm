@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cvat-redis
+spec:
+  selector:
+    matchLabels:
+      app: cvat-redis # has to match .spec.template.metadata.labels
+  serviceName: "cvat-redis"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: cvat-redis # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: cvat-redis
+        image: redis:4.0-alpine
+        ports:
+        - containerPort: 5432
+          name: psql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cvat-redis
+spec:
+  ports:
+  - port: 6379
+    name: redis
+  selector:
+    app: cvat-redis

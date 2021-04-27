@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cvat-ui
+spec:
+  selector:
+    matchLabels:
+      app: cvat-ui # has to match .spec.template.metadata.labels
+  serviceName: "cvat-ui"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: cvat-ui # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: cvat-ui
+        image: openvino/cvat_ui
+        ports:
+        - containerPort: 80
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cvat-ui
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: cvat-ui

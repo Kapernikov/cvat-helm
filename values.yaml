@@ -1,0 +1,3 @@
+ingress:
+  host: cvat.kube-public
+  clusterIssuer: selfsigned-ca-issuer
