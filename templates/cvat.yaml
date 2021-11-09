@@ -18,6 +18,14 @@ spec:
       - name: cvat
         image: openvino/cvat_server
         env:
+        {{ if .Values.superUser.create }}
+        - name: "DJANGO_SUPERUSER_USERNAME_FIELD"
+          value: {{ .Values.superUser.username }}
+        - name: "DJANGO_SUPERUSER_EMAIL_FIELD"
+          value: {{ .Values.superUser.email }}
+        - name: "DJANGO_SUPERUSER_PASSWORD"
+          value: {{ .Values.superUser.initialPassword }}
+        {{ end }}
         - name: "DJANGO_MODWSGI_EXTRA_ARGS"
           value: ''
         - name: "ALLOWED_HOSTS"
