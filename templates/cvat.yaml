@@ -16,6 +16,8 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: cvat
+        securityContext:
+          fsGroup: 1000
         image: openvino/cvat_server
         env:
         {{ if .Values.superUser.create }}
