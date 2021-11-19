@@ -7,3 +7,9 @@ superUser:
 ingress:
   host: cvat.kube-public
   clusterIssuer: selfsigned-ca-issuer
+
+volume:
+  # when using a block type volume you must mount postgres data in a subdir otherwise postgres will fail to start.
+  # set this to false for upgrades from old release of this chart
+  createSubdir: true
+  size: 2Gi

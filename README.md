@@ -13,6 +13,10 @@ for an ongoing PR introducing an official helm chart.
 * `ingress.host` the public hostname for ingress
 * `ingress.clusterIssuer` the cluster issuer for ingress
 
+* `volume.createSubdir` create postgres data in a subdirectory under the volume. needed if you use block volumes
+* `volume.storageClassName` storage class for volume
+* `volume.size` size of volume to create
+
 # How to install
 
 this will install cvat in its own namespace `cvat` , set an initial password and set the public URL to cvat.com. It will use letsencrypt-prod issuer for https cert
