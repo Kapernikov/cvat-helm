@@ -1,5 +1,9 @@
 # Simple helm chart for CVAT
 
+Features:
+ * creates a superuser and store it in a secret for integration with other kubernetes resources
+ * optionally uses zalando's postgres operator (see [here](zalando-pgo.md))
+
 Note that CVAT now has an official helm chart, see https://github.com/openvinotoolkit/cvat/pull/3102
 # Usage
 
