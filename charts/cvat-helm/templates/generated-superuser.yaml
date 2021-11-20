@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cvat-superuser
+data:
+  username: genadmin
+  {{- if .Release.IsInstall }}
+  password: {{ randAlphaNum 20 | b64enc }}
+  {{ else }}
+  # `index` function is necessary because the property name contains a dash.
+  # Otherwise (...).data.db_password would have worked too.
+  password:  {{ index (lookup "v1" "Secret" .Release.Namespace "cvat-superuser").data "password" }}
+  {{ end }}
