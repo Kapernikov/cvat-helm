@@ -14,10 +14,10 @@ spec:
         app: cvat # has to match .spec.selector.matchLabels
     spec:
       terminationGracePeriodSeconds: 10
+      securityContext:
+        fsGroup: 1000
       containers:
       - name: cvat
-        securityContext:
-          fsGroup: 1000
         image: openvino/cvat_server
         env:
         - name: "DJANGO_MODWSGI_EXTRA_ARGS"
