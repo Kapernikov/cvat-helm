@@ -19,10 +19,9 @@ spec:
       - name: cvat
         image: openvino/cvat_server:v{{ .Chart.AppVersion }}
         env:
+{{ template "cvat-helm.postgres-env" . }}
         - name: "CVAT_REDIS_HOST"
           value: 'cvat-redis'
-        - name: CVAT_POSTGRES_HOST
-          value: 'cvat-db'
         - name: GENERATED_USERNAME
           valueFrom:
             secretKeyRef:

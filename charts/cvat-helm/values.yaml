@@ -9,7 +9,32 @@ ingress:
   clusterIssuer: selfsigned-ca-issuer
 
 volume:
+  data:
+    size: 6Gi
+    #storageClassName: gp2
+  keys:
+    size: 1Gi
+    #storageClassName: gp2
+  logs:
+    size: 1Gi
+    #storageClassName: gp2
+  share:
+    size: 4Gi
+    #storageClassName: gp2
+
+database:
+  create: true
   # when using a block type volume you must mount postgres data in a subdir otherwise postgres will fail to start.
   # set this to false for upgrades from old release of this chart
   createSubdir: true
+  # storageClassName: gp2
+
   size: 2Gi
+  # for zalando integration set create to false
+  zalando:
+    # integrate with zalando postgres operator
+    enable: false
+    databaseUser: cvat
+    databaseCluster: cvat-db
+    databaseName: cvat
+  

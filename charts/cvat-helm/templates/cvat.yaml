@@ -20,14 +20,13 @@ spec:
       - name: cvat
         image: openvino/cvat_server:v{{ .Chart.AppVersion }}
         env:
+{{ template "cvat-helm.postgres-env" . }}
         - name: "DJANGO_MODWSGI_EXTRA_ARGS"
           value: ''
         - name: "ALLOWED_HOSTS"
           value: '*'
         - name: "CVAT_REDIS_HOST"
           value: 'cvat-redis'
-        - name: CVAT_POSTGRES_HOST
-          value: 'cvat-db'
         - name: ADAPTIVE_AUTO_ANNOTATION
           value: 'false'
         - name: CVAT_SHARE_URL
@@ -80,42 +79,54 @@ spec:
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
+{{ if .Values.volume.data.storageClassName }}
+  storageClassName: {{ .Values.volume.data.storageClassName }}
+{{ end }}
   resources:
     requests:
-      storage: 6Gi
+      storage: {{ .Values.volume.data.size }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: cvat-keys
 spec:
+{{ if .Values.volume.keys.storageClassName }}
+  storageClassName: {{ .Values.volume.keys.storageClassName }}
+{{ end }}
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 1Gi
+      storage: {{ .Values.volume.keys.size }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: cvat-logs
 spec:
+{{ if .Values.volume.logs.storageClassName }}
+  storageClassName: {{ .Values.volume.logs.storageClassName }}
+{{ end }}
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 1Gi
+      storage: {{ .Values.volume.logs.size }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: cvat-share
 spec:
+{{ if .Values.volume.share.storageClassName }}
+  storageClassName: {{ .Values.volume.share.storageClassName }}
+{{ end }}
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 4Gi
+      storage: {{ .Values.volume.share.size }}

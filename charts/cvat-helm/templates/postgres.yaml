@@ -1,3 +1,4 @@
+{{ if .Values.database.create }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -23,7 +24,7 @@ spec:
           - mountPath: "/var/lib/postgresql/data"
             name: cvat-db
         env:
-{{ if .Values.volume.createSubdir }}
+{{ if .Values.database.createSubdir }}
         - name: PGDATA
           value: /var/lib/postgresql/data/db-files/
 {{ end }}
@@ -58,12 +59,14 @@ kind: PersistentVolumeClaim
 metadata:
   name: cvat-db
 spec:
-{{ if .Values.volume.storageClassName }}
-  storageClassName: {{ .Values.volume.storageClassName }}
+{{ if .Values.database.storageClassName }}
+  storageClassName: {{ .Values.database.storageClassName }}
 {{ end }}
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
   resources:
     requests:
-      storage: {{ .Values.volume.size }}
+      storage: {{ .Values.database.size }}
+
+{{ end }}
