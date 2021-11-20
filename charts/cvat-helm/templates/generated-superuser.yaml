@@ -3,7 +3,7 @@ kind: Secret
 metadata:
   name: cvat-superuser
 data:
-  username: genadmin
+  username: {{ "genadmin" | b64enc }}
   {{- if .Release.IsInstall }}
   password: {{ randAlphaNum 20 | b64enc }}
   {{ else }}
