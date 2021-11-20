@@ -22,9 +22,9 @@ this will install cvat in its own namespace `cvat` , set an initial password and
 
 ```shell
 git clone https://github.com/Kapernikov/cvat-helm.git
-cd cvat-helm
+cd cvat-helm/charts
 
-helm install cvat . \
+helm install cvat cvat-helm \
         --namespace='cvat' --create-namespace \
         --set superUser.initialPassword=boo \
         --set ingress.host=cvat.com \
