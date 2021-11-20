@@ -1,6 +1,5 @@
 # Simple helm chart for CVAT
 
-Note that CVAT now has an official helm chart, see https://github.com/openvinotoolkit/cvat/pull/3102
 
 # Values
 

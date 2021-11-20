@@ -1,8 +1,10 @@
 # Simple helm chart for CVAT
 
+Note that CVAT now has an official helm chart, see https://github.com/openvinotoolkit/cvat/pull/3102
+# Usage
+
 See [here](charts/cvat-helm/README.md) for all configuration options
 
-Usage:
 
 ```shell
 helm repo add cvat-helm https://kapernikov.github.io/cvat-helm/
