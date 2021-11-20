@@ -3,7 +3,12 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: cvat-init-create-users
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
+  ttlSecondsAfterFinished: 10
   template:
     metadata:
       labels:
