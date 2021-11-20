@@ -25,6 +25,11 @@ spec:
           value: 'cvat-db'
         command: ["/bin/sh", "-c"]
         args:
-            - python3 ~/manage.py createsuperuser --username "{{ .Values.superUser.username }}" --email "{{ .Values.superUser.email }}"  --noinput &&
-              echo "from django.contrib.auth.models import User; u=User.objects.get(username='{{ .Values.superUser.username }}'); u.set_password('{{ .Values.superUser.initialPassword }}'); u.save()" | python3 ~/manage.py shell
+            - |
+              cat <<EOF | python manage.py shell
+              from django.contrib.auth import get_user_model
+              User = get_user_model()  # get the currently active user model,
+              User.objects.filter(username='{{ .Values.superUser.username }}').exists() or \
+                User.objects.create_superuser('{{ .Values.superUser.username }}', '{{ .Values.superUser.email }}', '{{ .Values.superUser.initialPassword }}')
+              EOF
 {{ end }}
