@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: cvat-ui
-        image: openvino/cvat_ui
+        image: openvino/cvat_ui:v{{ .Chart.AppVersion }}
         ports:
         - containerPort: 80
           name: http

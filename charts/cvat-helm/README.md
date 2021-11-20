@@ -8,6 +8,9 @@
 * `superUser.initialPassword` the superuser initial password to create
 * `superUser.email` the email address of the super user
 
+Note that this chart will always create another superuser with a dynamically generated password. The generated credentials will be stored in a kubernetes secret called `cvat-superuser`.
+This is useful if you have other pods that need to access the CVAT API.
+
 * `ingress.host` the public hostname for ingress
 * `ingress.clusterIssuer` the cluster issuer for ingress
 

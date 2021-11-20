@@ -18,7 +18,7 @@ spec:
         fsGroup: 1000
       containers:
       - name: cvat
-        image: openvino/cvat_server
+        image: openvino/cvat_server:v{{ .Chart.AppVersion }}
         env:
         - name: "DJANGO_MODWSGI_EXTRA_ARGS"
           value: ''

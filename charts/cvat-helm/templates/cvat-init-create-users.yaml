@@ -17,7 +17,7 @@ spec:
       restartPolicy: OnFailure
       containers:
       - name: cvat
-        image: openvino/cvat_server
+        image: openvino/cvat_server:v{{ .Chart.AppVersion }}
         env:
         - name: "CVAT_REDIS_HOST"
           value: 'cvat-redis'
