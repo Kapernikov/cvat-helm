@@ -15,6 +15,9 @@ spec:
         app: cvat-init-create-users # has to match .spec.selector.matchLabels
     spec:
       restartPolicy: OnFailure
+{{ if .Values.workloads }}
+{{ toYaml .Values.workloads | indent 6 }}
+{{ end}}
       containers:
       - name: cvat
         image: openvino/cvat_server:v{{ .Chart.AppVersion }}

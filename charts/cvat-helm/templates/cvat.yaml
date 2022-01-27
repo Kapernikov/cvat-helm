@@ -16,6 +16,9 @@ spec:
       terminationGracePeriodSeconds: 10
       securityContext:
         fsGroup: 1000
+{{ if .Values.workloads }}
+{{ toYaml .Values.workloads | indent 6 }}
+{{ end}}
       containers:
       - name: cvat
         image: openvino/cvat_server:v{{ .Chart.AppVersion }}

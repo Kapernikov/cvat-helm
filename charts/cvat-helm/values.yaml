@@ -38,3 +38,9 @@ database:
     databaseCluster: cvat-db
     databaseName: cvat
   
+workloads:
+  tolerations:
+    - key: "kubernetes.azure.com/scalesetpriority"
+      operator: "Equal"
+      value: "spot"
+      effect: "NoSchedule"

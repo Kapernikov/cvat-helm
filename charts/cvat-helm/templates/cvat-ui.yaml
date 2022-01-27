@@ -13,6 +13,9 @@ spec:
       labels:
         app: cvat-ui # has to match .spec.selector.matchLabels
     spec:
+{{ if .Values.workloads }}
+{{ toYaml .Values.workloads | indent 6 }}
+{{ end}}
       containers:
       - name: cvat-ui
         image: openvino/cvat_ui:v{{ .Chart.AppVersion }}
