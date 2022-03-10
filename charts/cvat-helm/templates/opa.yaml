@@ -25,7 +25,7 @@ spec:
 {{ if .Values.opa.image }}
         image: {{ .Values.opa.image }}
 {{ else }}
-        image: {{ .Values.opa.repository }}:{{ .Chart.Version }}
+        image: {{ .Values.opa.repository }}:cvat-helm-{{ .Chart.Version }}
 {{ end }}
         ports:
         - containerPort: 8181

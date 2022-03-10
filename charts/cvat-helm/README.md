@@ -42,6 +42,5 @@ helm install cvat cvat-helm \
 * Bump CVAT version number (tag) in `docker/opa/Dockerfile`
 * Bump appVersion in `charts/cvat-helm/Chart.yaml` to the cvat version
 * Bump version in `charts/cvat-helm/Chart.yaml` to the version of the future helm chart
-* Create a tag with the new version number (eg `cvat-helm-0.1.7`)
-* Create a github release with that tag
+* commit and push
 
