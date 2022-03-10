@@ -1,0 +1,29 @@
+apiVersion: skaffold/v2beta10
+kind: Config
+metadata:
+    name: cvat-helm
+build:
+    local:
+      concurrency: 0
+    artifacts:
+        - image: opa
+          context: docker/opa
+          docker:
+            dockerfile: Dockerfile
+            
+deploy:
+  helm:
+    releases:
+      - name: ch
+        chartPath: "charts/cvat-helm"
+        artifactOverrides:
+          opa.image: opa
+        setValueTemplates:
+          foo: bar
+
+profiles:
+  - name: atlas
+    patches:
+      - op: add
+        path: /deploy/helm/releases/0/setValueTemplates/opa.imagePullSecret
+        value: "registry-creds"

@@ -8,6 +8,13 @@ ingress:
   host: cvat.kube-public
   clusterIssuer: selfsigned-ca-issuer
 
+opa:
+  repository: frankdekervel/opa-cvat-rules
+  ### if you want to use skaffold, use opa.image
+  # image: opa
+  #imagePullSecret: registry-creds
+
+
 volume:
   data:
     size: 6Gi

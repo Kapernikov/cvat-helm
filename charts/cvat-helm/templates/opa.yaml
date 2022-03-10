@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cvat-opa
+spec:
+  selector:
+    matchLabels:
+      app: cvat-opa
+  serviceName: "opa"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: cvat-opa # has to match .spec.selector.matchLabels
+    spec:
+{{ if .Values.opa.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.opa.imagePullSecret }}
+{{ end }}
+{{ if .Values.workloads }}
+{{ toYaml .Values.workloads | indent 6 }}
+{{ end}}
+      containers:
+      - name: cvat-opa
+{{ if .Values.opa.image }}
+        image: {{ .Values.opa.image }}
+{{ else }}
+        image: {{ .Values.opa.repository }}:{{ .Chart.Version }}
+{{ end }}
+        ports:
+        - containerPort: 8181
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opa
+spec:
+  ports:
+  - port: 8181
+    name: http
+  selector:
+    app: cvat-opa

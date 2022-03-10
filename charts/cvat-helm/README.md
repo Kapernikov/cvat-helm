@@ -1,11 +1,11 @@
 # Simple helm chart for CVAT
 
 Features:
- * creates a superuser and store it in a secret for integration with other kubernetes resources
- * optionally uses zalando's postgres operator (see [here](zalando-pgo.md))
 
+* creates a superuser and store it in a secret for integration with other kubernetes resources
+* optionally uses zalando's postgres operator (see [here](zalando-pgo.md))
 
-# Values
+## Values
 
 * `superUser.create` true|false create a superuser
 * `superUser.username` the superuser username to create
@@ -22,7 +22,7 @@ This is useful if you have other pods that need to access the CVAT API.
 * `volume.storageClassName` storage class for volume
 * `volume.size` size of volume to create
 
-# How to install
+## How to install
 
 this will install cvat in its own namespace `cvat` , set an initial password and set the public URL to cvat.com. It will use letsencrypt-prod issuer for https cert
 
@@ -36,3 +36,12 @@ helm install cvat cvat-helm \
         --set ingress.host=cvat.com \
         --set ingress.clusterIssuer=letsencrypt-prod 
 ```
+
+## How to create a release
+
+* Bump CVAT version number (tag) in `docker/opa/Dockerfile`
+* Bump appVersion in `charts/cvat-helm/Chart.yaml` to the cvat version
+* Bump version in `charts/cvat-helm/Chart.yaml` to the version of the future helm chart
+* Create a tag with the new version number (eg `cvat-helm-0.1.7`)
+* Create a github release with that tag
+
