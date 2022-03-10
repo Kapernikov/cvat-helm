@@ -18,7 +18,9 @@ kind: Ingress
 metadata:
   name: cvat-ingress
   annotations:
-      kubernetes.io/ingress.class: nginx
+{{ if semverCompare "<1.21-0" .Capabilities.KubeVersion.GitVersion }}
+      kubernetes.io/ingress.class: {{ .Values.ingress.ingressClassName }}
+{{ end }}
       nginx.ingress.kubernetes.io/proxy-body-size: 900m
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-origin: "*"
@@ -26,6 +28,9 @@ metadata:
       nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
       nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
+{{ if semverCompare ">=1.21-0" .Capabilities.KubeVersion.GitVersion }}
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+{{ end }}
 {{ if .Values.ingress.clusterIssuer }}
   tls:
   - hosts:

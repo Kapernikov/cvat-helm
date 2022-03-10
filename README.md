@@ -19,7 +19,7 @@ helm search repo cvat-helm
 helm inspect values cvat-helm/cvat-helm
 
 # install
-helm install cvat . \
+helm install cvat cvat-helm/cvat-helm \
         --namespace='cvat' --create-namespace \
         --set superUser.initialPassword=boo \
         --set ingress.host=cvat.com \
