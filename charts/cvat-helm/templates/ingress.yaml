@@ -1,3 +1,4 @@
+{{ if .Values.ingress.enabled }}
 {{ if .Values.ingress.clusterIssuer }}
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -61,5 +62,4 @@ spec:
 #    proxy_pass_header       X-CSRFToken;
 #    proxy_set_header        Host $http_host;
 #    proxy_pass_header       Set-Cookie;
-
-
+{{ end }}
