@@ -5,6 +5,7 @@ superUser:
   email: frank@kapernikov.com
 
 ingress:
+  enabled: true
   host: cvat.kube-public
   clusterIssuer: selfsigned-ca-issuer
   ingressClassName: nginx
