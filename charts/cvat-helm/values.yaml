@@ -28,7 +28,9 @@ volume:
     size: 1Gi
     #storageClassName: gp2
   share:
-    size: 4Gi
+    size: 1Gi
+    create: true
+    name: cvat-share
     #storageClassName: gp2
 
 database:

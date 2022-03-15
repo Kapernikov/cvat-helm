@@ -15,12 +15,18 @@ Features:
 Note that this chart will always create another superuser with a dynamically generated password. The generated credentials will be stored in a kubernetes secret called `cvat-superuser`.
 This is useful if you have other pods that need to access the CVAT API.
 
+* `ingress.enabled` true|false enable ingress
 * `ingress.host` the public hostname for ingress
 * `ingress.clusterIssuer` the cluster issuer for ingress
+* `ingress.ingressClassName` the ingress class name
 
-* `volume.createSubdir` create postgres data in a subdirectory under the volume. needed if you use block volumes
+* `volume.createSubdir` create postgres data in a subdirectory under the volume. needed if you use block volumes. Note: once you set this value, changing it **will cause you to loose data** (as the postgres data directory will be changed).
 * `volume.storageClassName` storage class for volume
-* `volume.size` size of volume to create
+* `volume.data.size` size of volume to create for storing data. Should be big enough to hold all images/videos you want to annotate.
+
+* `volume.share.size` size of the share volume to create. If you don't use volume sharing, you can leave this at a small value.
+* `volume.share.create` set this to false if you want to provide your own share volume (default=true).
+* `volume.share.name` set this to the name of the share volume if you provide your own (see above). Defaults to `cvat-share`
 
 ## How to install
 

@@ -60,7 +60,7 @@ spec:
             claimName: cvat-logs
         - name: cvat-share
           persistentVolumeClaim:
-            claimName: cvat-share
+            claimName: {{ .Values.volume.share.name }}
 
 ---
 apiVersion: v1
@@ -118,11 +118,12 @@ spec:
   resources:
     requests:
       storage: {{ .Values.volume.logs.size }}
+{{ if .Values.volume.share.create }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: cvat-share
+  name: {{ .Values.volume.share.name }}
 spec:
 {{ if .Values.volume.share.storageClassName }}
   storageClassName: {{ .Values.volume.share.storageClassName }}
@@ -133,3 +134,4 @@ spec:
   resources:
     requests:
       storage: {{ .Values.volume.share.size }}
+{{ end }}
