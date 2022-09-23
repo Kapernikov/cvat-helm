@@ -1,3 +1,5 @@
+> **Note that as of 2022/09 the built in helm chart for CVAT has CVAT2 support too, so it might make sense to move to the official helm chart.**
+
 # Simple helm chart for CVAT
 
 Features:

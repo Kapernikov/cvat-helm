@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y install git && \
     git clone https://github.com/openvinotoolkit/cvat && cd cvat && \
-    git checkout v2.1.0
+    git checkout v2.2.0
 
 FROM openpolicyagent/opa:0.34.2-rootless
 
