@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   cvat-helm:
   - apiVersion: v2
+    appVersion: 2.2.0
+    created: "2022-09-23T08:18:50.28430212Z"
+    description: A Helm chart for CVAT
+    digest: c23b333e78a332f351f111f6c6da1b94e64cb8058e9d808b18ee5580b0abce69
+    name: cvat-helm
+    type: application
+    urls:
+    - https://github.com/Kapernikov/cvat-helm/releases/download/cvat-helm-0.2.4/cvat-helm-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v2
     appVersion: 2.1.0
     created: "2022-06-13T07:26:17.067362775Z"
     description: A Helm chart for CVAT
@@ -101,4 +111,4 @@ entries:
     urls:
     - https://github.com/Kapernikov/cvat-helm/releases/download/cvat-helm-0.1.1/cvat-helm-0.1.1.tgz
     version: 0.1.1
-generated: "2022-06-13T07:26:17.067414676Z"
+generated: "2022-09-23T08:18:50.284355819Z"
