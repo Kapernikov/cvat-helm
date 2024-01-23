@@ -1,4 +1,4 @@
-> **Note that as of 2022/09 the built in helm chart for CVAT has CVAT2 support too, so it might make sense to move to the official helm chart. See https://opencv.github.io/cvat/docs/administration/advanced/k8s_deployment_with_helm/ **
+> **Note that as of 2022/09 the built in helm chart for CVAT has CVAT2 support too, so it might make sense to move to the official helm chart. See https://opencv.github.io/cvat/docs/administration/advanced/k8s_deployment_with_helm/**
 
 # Simple helm chart for CVAT
 
